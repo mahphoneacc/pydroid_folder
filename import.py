@@ -21,8 +21,11 @@ for file in files:
 
 print('');
 DATA_DIR = '/storage/emulated/0/data/Db'
+DATA_DIR = 'D:/data/dbs/fox'
 PY_DIR = '/storage/emulated/0/data/my_python'
+PY_DIR = 'C:/Users/Sam/Documents/repo/pydroid_folder'
 CHKPNT_FILE = 'chkpntfil.chp'
+
 os.chdir(DATA_DIR)
 
 curr_dir = os.getcwd();
@@ -39,6 +42,8 @@ for file in files:
 
 
 filename = '2_5433639494983094589.csv';
+filename = 'VK_128M.txt';
+
 colname = 'last_name';
 colnum = 0;
 separator =',';
@@ -73,11 +78,16 @@ dfmail = dvs.Df_val_cnt(PY_DIR+'/'+'emails.csv');
 dfphon = dvs.Df_val_cnt(PY_DIR+'/'+'phones.csv');
 dfnick = dvs.Df_val_cnt(PY_DIR+'/'+'nicks.csv');
 dffio = dvs.Df_fio(PY_DIR+'/'+'fio.csv');
+dfsrc = dvs.Df_val_cnt(PY_DIR+'/'+'src.csv');
 lnk_fio_phone = dvs.Df_link(PY_DIR+'/'+'fio_phones.csv');
 lnk_fio_nick = dvs.Df_link(PY_DIR+'/'+'fio_nick.csv');
 
+# Добавляю файл-источник
+src_id = dfsrc.get_index(filename);
+
 print('');
-with open(DATA_DIR + '/' + filename, "r") as txtf:
+#with open(DATA_DIR + '/' + filename, "r", encoding='cp1251') as txtf:
+with open(DATA_DIR + '/' + filename, "r", encoding='utf8') as txtf:
 	numrow = 1
 	for line in txtf:
 		line_split = line.split(separator);
@@ -130,6 +140,7 @@ with open(DATA_DIR + '/' + filename, "r") as txtf:
 			unam_id = dfnick.get_index(line_split[dict_cols['username']['colnum']]);
 		#	print('unam: ', unam);
 			
+            
 			# фио: фамилия, имя
 			#print('step 5');
 			fio_id = dffio.get_index(str(surn_id), str(nam_id));
@@ -147,10 +158,10 @@ with open(DATA_DIR + '/' + filename, "r") as txtf:
 					print(line.split(separator)[i]);
 		
 		numrow += 1;
-		# сохранения и индикпция
+		# сохранения и индикация
 		if (numrow % 1000 == 0):
 			#break
-			print(numrow, ' - ' * 80)
+			print(numrow, ' - ' * 30)
 			dfnam.save();
 			dfsur.save();
 			dfmail.save();
